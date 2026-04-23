@@ -9,7 +9,7 @@ from .errors import (
     RateLimitError,
 )
 
-DEFAULT_BASE_URL = "https://api.emailalias.io"
+DEFAULT_BASE_URL = "https://emailalias.io"
 
 
 class Client:

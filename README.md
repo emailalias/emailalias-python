@@ -72,7 +72,7 @@ except RateLimitError:
 ```python
 client = Client(
     api_key="ea_live_xxx",
-    base_url="https://api.emailalias.io",  # override for staging/self-host
+    base_url="https://emailalias.io",  # override for staging/self-host
     timeout=30.0,
 )
 ```
