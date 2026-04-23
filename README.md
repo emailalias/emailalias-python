@@ -1,6 +1,6 @@
 # emailalias-python
 
-Official Python client for the [EmailAlias](https://emailalias.io) REST API.
+Official Python client for the [EmailAlias.io](https://emailalias.io) REST API.
 
 API access is a **Premium** feature. Generate a key from **Settings → API Keys** in the web dashboard.
 
