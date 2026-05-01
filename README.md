@@ -84,6 +84,7 @@ client = Client(
 | `list_aliases()` | `GET /api/aliases` |
 | `create_alias(...)` | `POST /api/aliases` |
 | `update_alias(id, active=, label=)` | `PATCH /api/aliases/{id}` |
+| `update_alias_display_name(id, display_name)` | `PATCH /api/aliases/{id}/display-name` |
 | `delete_alias(id)` | `DELETE /api/aliases/{id}` |
 | `list_available_domains()` | `GET /api/aliases/domains` |
 | `list_destinations()` | `GET /api/destinations` |

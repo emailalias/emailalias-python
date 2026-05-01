@@ -80,6 +80,7 @@ class Client:
         destination_email: Optional[str] = None,
         custom_code: Optional[str] = None,
         tag: Optional[str] = None,
+        display_name: Optional[str] = None,
     ) -> Dict[str, Any]:
         body: Dict[str, Any] = {"alias_type": alias_type}
         if label is not None:
@@ -92,6 +93,8 @@ class Client:
             body["custom_code"] = custom_code
         if tag is not None:
             body["tag"] = tag
+        if display_name is not None:
+            body["display_name"] = display_name
         return self._request("POST", "/api/aliases", json=body)
 
     def update_alias(
@@ -107,6 +110,26 @@ class Client:
         if label is not None:
             body["label"] = label
         return self._request("PATCH", f"/api/aliases/{alias_id}", json=body)
+
+    def update_alias_display_name(
+        self, alias_id: str, display_name: Optional[str]
+    ) -> Dict[str, Any]:
+        """Schedule a display-name change for an alias (Premium-only).
+
+        Edits go through a 24-hour cooldown — the new value lands in
+        ``display_name_pending`` and promotes to ``display_name`` 24h after
+        the most recent edit. Capped at 3 edits per rolling 24h per alias.
+        Pass ``None`` (or empty string) to clear the name; clearing follows
+        the same cooldown.
+
+        Brand-impersonation patterns (PayPal, Apple, banks, etc.) are
+        rejected with 400 after homoglyph/leetspeak normalisation.
+        """
+        return self._request(
+            "PATCH",
+            f"/api/aliases/{alias_id}/display-name",
+            json={"display_name": display_name},
+        )
 
     def delete_alias(self, alias_id: str) -> None:
         self._request("DELETE", f"/api/aliases/{alias_id}")
