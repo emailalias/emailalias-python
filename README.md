@@ -96,6 +96,8 @@ client = Client(
 | `add_domain(name)` | `POST /api/domains` |
 | `verify_domain(id)` | `POST /api/domains/{id}/verify` |
 | `delete_domain(id)` | `DELETE /api/domains/{id}` |
+| `set_catch_all(id, catch_all, destination=None)` | `PATCH /api/domains/{id}/catch-all` |
+| `disable_catch_all_aliases(id)` | `POST /api/domains/{id}/catch-all/disable-aliases` |
 | `get_dashboard_stats()` | `GET /api/analytics/dashboard` |
 | `list_logs(page=, per_page=)` | `GET /api/analytics/logs` |
 | `list_exposure_events(page=, per_page=)` | `GET /api/analytics/exposure` |

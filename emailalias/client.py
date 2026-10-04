@@ -182,6 +182,37 @@ class Client:
     def delete_domain(self, domain_id: str) -> None:
         self._request("DELETE", f"/api/domains/{domain_id}")
 
+    def set_catch_all(
+        self,
+        domain_id: str,
+        catch_all: bool,
+        destination: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Enable or disable catch-all on a verified custom domain (Premium-only).
+
+        When enabling, ``destination`` must be the user's primary email or a
+        verified forwarding destination they own — that inbox receives every
+        alias the catch-all auto-creates. Defaults to the primary email when
+        omitted. Disabling clears the stored destination.
+        """
+        payload: Dict[str, Any] = {"catch_all": catch_all}
+        if destination is not None:
+            payload["destination"] = destination
+        return self._request(
+            "PATCH", f"/api/domains/{domain_id}/catch-all", json=payload
+        )
+
+    def disable_catch_all_aliases(self, domain_id: str) -> Dict[str, Any]:
+        """Bulk-disable every active alias catch-all auto-created on a domain.
+
+        Sets them inactive (forwarding stops) without deleting them, and leaves
+        hand-created aliases and the catch-all setting itself untouched.
+        Idempotent. Returns ``{"disabled": <count>}``.
+        """
+        return self._request(
+            "POST", f"/api/domains/{domain_id}/catch-all/disable-aliases"
+        )
+
     # ── Analytics ─────────────────────────────────────────────────────────
     def get_dashboard_stats(self) -> Dict[str, Any]:
         return self._request("GET", "/api/analytics/dashboard")
